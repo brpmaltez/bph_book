@@ -1,8 +1,8 @@
-# Biostatistics for the Impatient
+# Biostatistics for People in Hurry
 
 *A practical and intuitive guide to biostatistics, scientific papers, and R.*
 
-**Biostatistics for the Impatient** began as a **mentorship project at the Department of Epidemiology, Faculty of Medicine, Universidade Federal Fluminense (UFF)**. It was developed to help students and future researchers move beyond formula memorization and develop an intuitive understanding of statistical reasoning.
+**Biostatistics for People in Hurry** began as a **mentorship project at the Department of Epidemiology, Faculty of Medicine, Universidade Federal Fluminense (UFF)**. It was developed to help students and future researchers move beyond formula memorization and develop an intuitive understanding of statistical reasoning.
 
 The book aims to build a bridge between:
 
