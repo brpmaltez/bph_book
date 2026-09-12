@@ -17,7 +17,4 @@ The complete LaTeX source, figures, references, and R code are available in this
 Contributions are welcome. If you find an error or have a suggestion, feel free to open an **Issue** or submit a **Pull Request**.
 
 ## License
-
-### Book
-
 The book, figures, and other original educational materials are licensed under **CC BY-NC-SA 4.0**. The accompanying R/LaTeX code is licensed under the **GNU GPLv3**.
