@@ -1,0 +1,672 @@
+\chapter{Testes de Hipótese}
+
+No capítulo anterior, estimamos parâmetros populacionais --- uma média ou uma proporção --- e expressamos a incerteza dessa estimativa através de um intervalo de confiança. O teste de hipóteses aborda um problema relacionado, porém distinto: em vez de perguntar "qual é o valor do parâmetro?", perguntamos "os dados são compatíveis com um valor específico (ou com a ausência de um efeito) que suponho a priori?"
+
+\section{Como pensar antes de escolher um teste}
+
+Uma dificuldade comum no início do estudo da estatística é imaginar que cada
+pergunta científica corresponde a um teste estatístico específico. Essa
+abordagem transforma a estatística em uma coleção de procedimentos a serem
+memorizados: teste-$t$, qui-quadrado, Fisher, ANOVA, correlação e assim por
+diante.
+
+Uma abordagem mais útil é começar pela \textbf{pergunta científica} e, a
+partir dela, determinar qual método estatístico é apropriado. A escolha do
+teste não deve ser feita simplesmente pelo nome da variável ou por uma regra
+isolada, mas pelo conjunto de características do problema.
+
+Uma forma de organizar esse raciocínio é:
+
+\begin{enumerate}
+\item Pergunta científica
+\item Desenho do estudo
+\item Tipos de variáveis e estrutura dos grupos
+\item Pressupostos
+\item Método estatístico
+\end{enumerate}
+
+A \textbf{pergunta científica} determina o que desejamos investigar. Podemos
+querer descrever uma população, comparar grupos, investigar uma associação,
+estimar um efeito ou avaliar uma hipótese causal.
+
+O \textbf{desenho do estudo} fornece informações fundamentais para essa
+escolha. Dados provenientes de um ensaio clínico randomizado, por exemplo,
+possuem uma estrutura diferente daquela encontrada em um estudo observacional.
+Da mesma forma, medidas repetidas no mesmo indivíduo não podem ser tratadas
+como se fossem observações independentes.
+
+Em seguida, devemos considerar o \textbf{tipo de variável} envolvida. Uma variável quantitativa, como idade ou pressão arterial, exige procedimentos diferentes daqueles utilizados para uma variável categórica, como sexo, tratamento ou ocorrência de um evento.
+
+Também é necessário observar a \textbf{estrutura dos grupos}. Quando existem
+dois grupos, por exemplo, devemos perguntar se eles são independentes ou se as observações estão pareadas. Quando existem três ou mais grupos, a estratégia de análise pode ser diferente. A mesma variável pode, portanto, ser analisada por métodos distintos dependendo da maneira como os dados foram coletados.
+
+Por fim, devem ser avaliados os \textbf{pressupostos} do procedimento. Alguns
+métodos dependem de condições relacionadas à distribuição dos dados,
+independência das observações, homogeneidade das variâncias ou tamanho das
+contagens esperadas. Quando essas condições não são adequadas, outro
+procedimento pode ser mais apropriado.
+
+Assim, o teste estatístico deve ser visto como a \textbf{consequência de uma
+sequência de decisões}, e não como o ponto de partida da análise.
+
+Neste capítulo, serão apresentados os principais conceitos que fundamentam os
+testes de hipótese. No capítulo seguinte, esses procedimentos serão organizados de forma prática, mostrando \textbf{quando utilizar cada um} e como escolher entre alternativas possíveis diante de diferentes tipos de dados e desenhos de estudo.
+
+\section{Associação, diferença e causalidade}
+
+Duas variáveis estão associadas quando a distribuição de uma varia de acordo
+com os valores ou categorias da outra.Por exemplo, pode existir associação entre idade e pressão arterial se os
+valores de pressão arterial tenderem a ser diferentes em indivíduos de
+idades diferentes.
+
+Uma comparação entre grupos também pode ser vista como uma forma particular
+de estudar associação. Ao comparar a idade entre os grupos RF e Cryo, estamos
+investigando se a distribuição da idade varia de acordo com o grupo de
+tratamento.
+
+É importante, entretanto, distinguir três perguntas:
+
+\begin{itemize}
+    \item \textbf{Descrição:} quais são os valores observados nos dados?
+    \item \textbf{Associação:} existe relação estatística entre as variáveis?
+    \item \textbf{Causalidade:} uma variável produz mudança na outra?
+\end{itemize}
+
+Essas perguntas não são equivalentes.
+
+Associação não implica causalidade. Uma associação observada pode decorrer de:
+
+\begin{itemize}
+    \item efeito causal;
+    \item causalidade reversa;
+    \item confundimento;
+    \item viés de seleção;
+    \item viés de mensuração;
+    \item acaso.
+\end{itemize}
+
+Em um ensaio clínico randomizado, a randomização ajuda a equilibrar, em
+expectativa, fatores de prognóstico entre os grupos. Quando o estudo é
+adequadamente conduzido, isso fortalece a interpretação causal da diferença
+entre os tratamentos.
+
+Em um estudo observacional, entretanto, uma associação entre exposição e
+desfecho não estabelece, por si só, que a exposição causou o desfecho.
+
+\section{Hipótese Nula e Alternativa}
+Todo teste de hipóteses parte de duas afirmações mutuamente excludentes sobre a população:
+\begin{itemize}
+    \item \textbf{Hipótese nula ($H_0$):} afirma que não há efeito, diferença ou associação --- é o estado de "nada de novo", tomado como verdadeiro até que haja evidência suficiente em contrário. Ex.: \emph{"o novo medicamento tem o mesmo efeito que o placebo"}.
+    \item \textbf{Hipótese alternativa ($H_1$ ou $H_a$):} afirma exatamente o oposto --- existe efeito, diferença ou associação. Ex.: \emph{"o novo medicamento reduz a pressão arterial mais do que o placebo"}.
+\end{itemize}
+
+A lógica é semelhante à de um julgamento: presume-se a inocência ($H_0$) e só se condena (rejeita-se $H_0$) diante de evidência que torne essa hipótese muito improvável. O teste nunca "prova" $H_0$ verdadeira --- apenas indica se há ou não evidência suficiente para rejeitá-la.
+
+\begin{error}
+\boxtitle{Direcionalidade e p-hacking}
+A hipótese alternativa pode ser \textbf{bilateral} ($H_1: \mu \neq \mu_0$, o efeito pode ir em qualquer direção) ou \textbf{unilateral} ($H_1: \mu > \mu_0$ ou $H_1: \mu < \mu_0$, quando só uma direção do efeito é biologicamente plausível ou relevante). A escolha deve ser feita antes de olhar os dados --- decidir isso depois de ver o resultado é uma forma de viés conhecida como \emph{p-hacking}.
+\end{error}
+
+\section{O Valor-p: Definição correta e interpretação clínica}
+
+\begin{definition}[Definição: Valor-p]
+\textbf{Valor-p:} A probabilidade de observar um resultado tão extremo quanto (ou mais extremo do que) o obtido na amostra, assumindo que a hipótese nula é verdadeira.
+\end{definition}
+
+Um valor-$p$ pequeno indica que o resultado observado seria raro se $H_0$ fosse de fato verdadeira --- o que enfraquece a credibilidade de $H_0$. Convencionalmente, compara-se o valor-$p$ a um limiar de significância ($\alpha$), geralmente $0{,}05$:
+\begin{itemize}
+    \item $p < \alpha$: rejeita-se $H_0$ --- resultado "estatisticamente significativo".
+    \item $p \ge \alpha$: não se rejeita $H_0$ --- não há evidência suficiente para afastar a hipótese de ausência de efeito.
+\end{itemize}
+
+\begin{deepdive}
+\boxtitle{Aprofundando: O que o valor-p NÃO significa}
+
+\begin{itemize}
+    \item Não é a probabilidade de $H_0$ ser verdadeira, nem de $H_1$ ser verdadeira.
+    \item Não mede o tamanho ou a relevância clínica do efeito --- uma amostra muito grande pode gerar $p < 0{,}05$ para uma diferença clinicamente irrelevante (ex.: $0{,}1\text{ mmHg}$ de diferença de pressão arterial).
+    \item Não é a probabilidade de o achado ser "por acaso" no sentido coloquial, e $p = 0{,}06$ não é qualitativamente diferente de $p = 0{,}04$ --- o limiar de $0{,}05$ é uma convenção, não uma lei natural.
+\end{itemize}
+Por isso, diretrizes editoriais recomendam reportar sempre o intervalo de confiança e uma medida de tamanho de efeito ao lado do valor-$p$.
+\end{deepdive}
+
+\section{Exemplo em R}
+
+Suponha que, em uma população de referência, a pressão arterial sistólica
+média seja de $130$ mmHg. Um pesquisador deseja investigar se pacientes
+submetidos a determinado tratamento apresentam uma pressão arterial sistólica
+média diferente desse valor.
+
+Uma amostra de $100$ pacientes apresentou média de $134$ mmHg. Para simplificar
+o exemplo, suponha que o desvio-padrão populacional seja conhecido e igual a
+$20$ mmHg.
+
+A pergunta científica é, portanto:
+
+\begin{quote}
+A pressão arterial sistólica média dos pacientes é diferente de
+$130$ mmHg?
+\end{quote}
+
+Como a pergunta é sobre uma única média populacional e o desvio-padrão
+populacional é conhecido, podemos utilizar um teste $Z$ para uma média.
+
+\subsection{Hipóteses}
+
+O primeiro passo é transformar a pergunta científica em hipóteses
+estatísticas.
+
+A hipótese nula representa o valor de referência:
+
+\[
+H_0:\mu=130.
+\]
+
+A hipótese alternativa representa a possibilidade de uma diferença:
+
+\[
+H_1:\mu\neq130.
+\]
+
+O teste é, portanto, \textbf{bilateral}, pois estamos interessados em detectar
+uma diferença em qualquer direção.
+
+\begin{itemize}
+    \item $H_0$: a média populacional é $130$ mmHg;
+    \item $H_1$: a média populacional é diferente de $130$ mmHg.
+\end{itemize}
+
+O nível de significância será definido como:
+
+\[
+\alpha=0{,}05.
+\]
+
+Isso significa que, sob as condições do teste, aceitamos uma probabilidade de
+$5\%$ de cometer um erro Tipo I caso rejeitemos uma hipótese nula verdadeira.
+
+\subsection{Calculando a estatística de teste}
+
+Para o teste $Z$ de uma média, utilizamos:
+
+\[
+Z=
+\frac{\bar{x}-\mu_0}
+{\sigma/\sqrt{n}},
+\]
+
+em que $\bar{x}$ é a média observada na amostra, $\mu_0$ é o valor especificado
+pela hipótese nula, $\sigma$ é o desvio-padrão populacional e $n$ é o tamanho
+da amostra.
+
+Neste exemplo:
+
+\[
+\bar{x}=134,\qquad
+\mu_0=130,\qquad
+\sigma=20,\qquad
+n=100.
+\]
+
+Portanto:
+
+\[
+Z=
+\frac{134-130}{20/\sqrt{100}}
+=
+\frac{4}{2}
+=
+2.
+\]
+
+A estatística de teste é, portanto, $Z=2$.
+
+Podemos realizar esse cálculo diretamente em R.
+
+\begin{code}[Código: cálculo da estatística Z]
+# Média observada na amostra
+media <- 134
+
+# Valor da média especificado em H0
+media_nula <- 130
+
+# Desvio-padrão populacional conhecido
+dp_populacional <- 20
+
+# Tamanho da amostra
+n <- 100
+
+# Cálculo da estatística Z
+z <- (media - media_nula) /
+  (dp_populacional / sqrt(n))
+
+z
+\end{code}
+
+Cada parte do código corresponde diretamente aos elementos da fórmula
+estatística:
+
+\begin{itemize}
+    \item \texttt{media} representa a média observada, $\bar{x}$;
+    \item \texttt{media\_nula} representa o valor proposto por $H_0$, $\mu_0$;
+    \item \texttt{dp\_populacional} representa $\sigma$;
+    \item \texttt{n} representa o tamanho da amostra;
+    \item a última expressão calcula a estatística $Z$.
+\end{itemize}
+
+O resultado é:
+
+\begin{code}[Resultado da estatística Z]
+[1] 2
+\end{code}
+
+Isso significa que a média observada está a $2$ erros-padrão do valor
+especificado pela hipótese nula.
+
+\subsection{Calculando o valor-p}
+
+Como nossa hipótese alternativa é bilateral, devemos considerar resultados extremos tanto acima quanto abaixo de
+$130$ mmHg. A distribuição utilizada é a distribuição normal padrão. Em R, a função
+\texttt{pnorm()} fornece probabilidades acumuladas dessa distribuição.
+
+Podemos calcular o valor-$p$ da seguinte maneira:
+
+\begin{code}[Código: cálculo do valor-p]
+# Probabilidade de observar um valor
+# pelo menos tão extremo quanto |Z| = 2
+p_valor <- 2 * (1 - pnorm(abs(z)))
+
+p_valor
+\end{code}
+
+A função \texttt{abs()} transforma $Z=2$ em seu valor absoluto. Isso é útil
+porque, em um teste bilateral, estamos interessados na distância da estatística
+em relação a zero, independentemente da direção.
+
+A expressão $1-\texttt{pnorm}(|Z|)$ calcula a probabilidade de observar um valor pelo menos tão grande quanto o
+valor observado em uma das caudas. Multiplicamos essa probabilidade por $2$
+porque o teste é bilateral.
+
+O resultado é aproximadamente:
+
+\begin{code}[Resultado do valor-p]
+[1] 0.0455
+\end{code}
+
+Portanto,
+
+\[
+p\approx0{,}0455.
+\]
+
+\subsection{Tomando a decisão}
+
+Agora podemos comparar o valor-$p$ com o nível de significância definido
+anteriormente:
+
+\[
+p=0{,}0455 < \alpha=0{,}05.
+\]
+
+Assim, rejeitamos $H_0$.
+
+Podemos também fazer essa decisão diretamente no R:
+
+\begin{code}[Código: decisão do teste]
+# Nível de significância
+alpha <- 0.05
+
+# Regra de decisão
+if (p_valor < alpha) {
+  print("Rejeitar H0")
+} else {
+  print("Não rejeitar H0")
+}
+\end{code}
+
+O resultado será:
+
+\begin{code}[Resultado da decisão]
+[1] "Rejeitar H0"
+\end{code}
+
+\subsection{Interpretação}
+
+Podemos concluir que, neste exemplo, há \textbf{evidência estatística de que a
+média populacional da pressão arterial sistólica seja diferente de
+$130$ mmHg}.
+
+O teste não demonstra que $H_1$ é verdadeira. Ele indica que os dados observados
+seriam relativamente pouco compatíveis com $H_0$, assumindo que as condições
+do teste sejam válidas. Também não podemos interpretar $p=0{,}0455$ como ``uma probabilidade de
+4,55\% de $H_0$ ser verdadeira''. O valor-$p$ é calculado \textbf{assumindo
+que $H_0$ é verdadeira}.
+
+Além disso, a significância estatística não informa, por si só, se uma
+diferença de $4$ mmHg é clinicamente relevante. Para essa avaliação, devemos
+considerar a magnitude do efeito, sua incerteza e o contexto clínico.
+
+\begin{error}
+\boxtitle{Não rejeitar $H_0$ não significa provar que não existe efeito}
+
+Se o valor-$p$ fosse maior que $0{,}05$, a conclusão seria ``não rejeitar
+$H_0$''. Isso não significaria que a média populacional é necessariamente
+igual a $130$ mmHg.
+
+Na verdade, significaria apenas que os dados não forneceram evidência estatística
+suficiente para rejeitar esse valor de referência, considerando o procedimento
+e o nível de significância adotados.
+
+Essa distinção é importante porque a capacidade de detectar uma diferença
+depende, entre outros fatores, do tamanho da amostra, da variabilidade dos
+dados e do tamanho do efeito. Esses fatores serão discutidos posteriormente
+ao estudarmos o poder estatístico.
+\end{error}
+
+\section{Erros de Decisão}
+Como toda decisão baseada em amostra, o teste de hipóteses está sujeito a erro. Existem dois tipos possíveis, resumidos na Tabela~\ref{tab:erros_decisao}.
+
+\begin{center}
+\captionof{table}{Matriz de Decisão e Tipos de Erro em Testes de Hipóteses}
+\label{tab:erros_decisao}
+
+\vspace{2mm}
+
+\begin{tabular}{l c c}
+\toprule
+\textbf{Decisão do Teste} & \textbf{$H_0$ Verdadeira} & \textbf{$H_0$ Falsa} \\
+\midrule
+\textbf{Rejeita $H_0$} &
+Erro Tipo I ($\alpha$) --- Falso Positivo &
+Decisão Correta (Poder = $1-\beta$) \\
+
+\textbf{Não rejeita $H_0$} &
+Decisão Correta &
+Erro Tipo II ($\beta$) --- Falso Negativo \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Erro Tipo I}
+Ocorre quando rejeitamos $H_0$ sendo ela, na realidade, verdadeira --- concluímos que há um efeito que de fato não existe (falso positivo). A probabilidade máxima aceita para esse erro é o próprio nível de significância $\alpha$ (tipicamente $0{,}05$, ou seja, $5\%$ de chance).
+
+\subsection{Erro Tipo II}
+Ocorre quando não rejeitamos $H_0$ sendo ela, na realidade, falsa --- deixamos de detectar um efeito que de fato existe (falso negativo). Sua probabilidade é denotada por $\beta$, e o complemento ($1-\beta$) é chamado de \textbf{poder do teste}.
+\begin{error}
+\boxtitle{Confundir Significância Estatística com Relevância Clínica}
+
+Amostras excessivamente grandes aumentam o poder estatístico a ponto de produzir $p < 0{,}05$ para diferenças minúsculas (por exemplo, uma redução de $0{,}1\text{ mmHg}$ na pressão arterial) sem qualquer impacto prático no prognóstico do paciente.
+\end{error}
+
+\section{Poder estatístico}
+
+O \textbf{poder estatístico} está diretamente relacionado ao Erro Tipo II. Se
+$\beta$ é a probabilidade de não rejeitar $H_0$ quando existe um efeito de
+determinado tamanho, então:
+
+\[
+\text{Poder}=1-\beta.
+\]
+
+Em outras palavras, o poder é a probabilidade de o teste \textbf{rejeitar
+corretamente $H_0$ quando uma diferença ou efeito de determinado tamanho
+realmente existe}.
+
+Isso significa que o poder não é uma propriedade fixa de um teste ou de um
+estudo. Ele depende do tamanho do efeito que se deseja detectar. Um estudo
+pode ter alto poder para detectar uma diferença grande, mas poder muito menor
+para detectar uma diferença pequena.
+
+\begin{definition}[Poder estatístico]
+\textbf{Poder estatístico:} probabilidade de rejeitar corretamente a hipótese
+nula quando existe, na população, um efeito de determinado tamanho sob a
+hipótese alternativa.
+
+\[
+\text{Poder}=1-\beta.
+\]
+\end{definition}
+
+O poder é determinado principalmente por quatro componentes:
+
+\begin{itemize}
+    \item \textbf{tamanho da amostra ($n$):} amostras maiores geralmente
+    aumentam o poder;
+
+    \item \textbf{tamanho do efeito:} efeitos maiores são mais fáceis de
+    detectar e, portanto, aumentam o poder;
+
+    \item \textbf{nível de significância ($\alpha$):} aumentar $\alpha$
+    torna mais fácil rejeitar $H_0$ e, consequentemente, aumenta o poder,
+    embora também aumente a probabilidade de Erro Tipo I;
+
+    \item \textbf{variabilidade dos dados:} quanto maior a variabilidade
+    em relação ao efeito que se deseja detectar, mais difícil é identificar
+    esse efeito e menor tende a ser o poder.
+\end{itemize}
+
+Podemos representar essa relação de forma simplificada como:
+
+\[
+\text{Poder}
+=
+f(n,\text{tamanho do efeito},\alpha,\text{variabilidade}).
+\]
+
+\subsection{Poder e tamanho da amostra}
+
+Essa relação é particularmente importante no planejamento de estudos.
+
+Suponha que um pesquisador queira comparar dois tratamentos e considere que
+uma diferença de $5$ mmHg na pressão arterial seja clinicamente relevante.
+Antes de coletar os dados, ele pode perguntar:
+
+\begin{quote}
+Quantos participantes são necessários para que o estudo tenha, por exemplo,
+$90\%$ de probabilidade de detectar uma diferença de $5$ mmHg, caso ela
+realmente exista?
+\end{quote}
+
+Essa é uma pergunta de \textbf{cálculo de tamanho amostral baseado em poder}.
+
+Em um planejamento prospectivo, o pesquisador geralmente especifica:
+
+\begin{itemize}
+    \item o efeito mínimo considerado clinicamente relevante;
+    \item a variabilidade esperada dos dados;
+    \item o nível de significância $\alpha$;
+    \item o poder desejado, frequentemente $80\%$ ou $90\%$.
+\end{itemize}
+
+A partir dessas informações, determina-se o tamanho de amostra necessário.
+
+Por exemplo, se um estudo for planejado com poder de $90\%$, isso significa que,
+\textbf{se o efeito especificado no planejamento realmente existir}, o
+procedimento estatístico terá aproximadamente $90\%$ de probabilidade de
+rejeitar $H_0$ nas condições assumidas.
+
+Isso não significa que o estudo terá $90\%$ de probabilidade de encontrar
+qualquer efeito que exista. Um efeito menor que aquele considerado no
+planejamento pode ser muito mais difícil de detectar.
+
+\begin{deepdive}
+\boxtitle{Poder, tamanho do efeito e relevância clínica}
+
+O conceito de poder ajuda a estabelecer uma conexão importante entre
+estatística e medicina.
+
+Considere dois estudos que utilizam o mesmo nível de significância e o mesmo
+teste estatístico. O primeiro foi planejado para detectar uma diferença de
+$10$ mmHg, enquanto o segundo foi planejado para detectar uma diferença de
+$2$ mmHg.
+
+Mesmo que tenham o mesmo número de participantes, o segundo estudo precisará
+de uma amostra maior para alcançar o mesmo poder, pois detectar uma diferença
+menor em relação à variabilidade dos dados é mais difícil.
+
+Por isso, o tamanho amostral não deve ser escolhido apenas pela conveniência
+ou pela disponibilidade de participantes. Idealmente, ele deve estar
+relacionado a uma diferença que tenha significado científico ou clínico.
+
+O conceito de \textbf{menor efeito clinicamente importante} é particularmente
+útil nesse contexto: o objetivo não é simplesmente ter poder suficiente para
+detectar algum efeito, mas ter poder suficiente para detectar um efeito que
+seja relevante para a pergunta científica.
+\end{deepdive}
+
+\begin{error}
+\boxtitle{Não confundir poder com probabilidade de o resultado ser significativo}
+Um estudo com poder de $80\%$ não significa que exista uma probabilidade de
+$80\%$ de obter $p<0{,}05$ independentemente do que acontecer nos dados.
+
+O poder de $80\%$ é definido \textbf{para um determinado tamanho de efeito,
+sob determinadas condições e pressupostos}. Se esse efeito realmente existir
+e as demais condições do planejamento forem adequadas, a probabilidade de
+rejeitar $H_0$ será aproximadamente $80\%$.
+
+Da mesma forma, um estudo com baixo poder que produza $p\geq0{,}05$ não
+permite concluir que o efeito seja inexistente. O resultado pode simplesmente
+refletir uma capacidade insuficiente de detectar o efeito de interesse.
+\end{error}
+
+\begin{error}
+\boxtitle{Poder pós-hoc}
+
+O cálculo de poder é mais útil quando realizado \textbf{antes da coleta dos
+dados}, durante o planejamento do estudo.
+
+Depois que os dados já foram coletados e o resultado do teste é conhecido,
+calcular um chamado ``poder observado'' com base no efeito estimado na própria
+amostra geralmente acrescenta pouca informação. Esse cálculo está fortemente
+relacionado ao valor-$p$ observado e pode ser enganoso como forma de explicar
+um resultado não significativo.
+
+Quando um estudo não encontra significância estatística, é mais informativo
+examinar:
+
+\begin{itemize}
+    \item a estimativa do efeito;
+    \item seu intervalo de confiança;
+    \item a precisão da estimativa;
+    \item o efeito mínimo clinicamente relevante;
+    \item e, quando apropriado, o poder planejado do estudo.
+\end{itemize}
+
+Assim, a pergunta adequada não é simplesmente ``o estudo teve poder
+suficiente?'', mas:
+
+\begin{quote}
+Os dados permitem excluir efeitos clinicamente relevantes com uma precisão
+adequada?
+\end{quote}
+\end{error}
+
+\subsection{Exemplo em R}
+
+Quando um teste não encontra diferença significativa, surge uma pergunta
+importante: será que realmente não há diferença, ou o estudo não tinha
+capacidade suficiente para detectar um efeito clinicamente relevante?
+
+\begin{code}[Cálculo prospectivo do tamanho amostral]
+library(pwr)
+
+# Diferença clinicamente relevante
+diferenca <- 5
+
+# Desvio-padrão esperado
+dp <- 18
+
+# Tamanho de efeito padronizado
+d <- diferenca / dp
+
+# Parâmetros do planejamento
+alpha <- 0.05
+poder_desejado <- 0.90
+
+# Calcular tamanho de amostra por grupo
+planejamento <- pwr.t.test(
+  d = d,
+  sig.level = alpha,
+  power = poder_desejado,
+  alternative = "two.sided",
+  type = "two.sample"
+)
+
+planejamento
+\end{code}
+
+\begin{code}[Resultado do cálculo]
+        Two-sample t test power calculation 
+
+            n = 273.3163
+            d = 0.2777778
+    sig.level = 0.05
+        power = 0.9
+alternative = two.sided
+
+NOTE: n is number in *each* group
+\end{code}
+
+O resultado informa o número aproximado de participantes necessários em cada
+grupo para alcançar o poder especificado, dadas as demais premissas do
+planejamento.
+
+É importante perceber que o poder é definido para um \textbf{determinado
+tamanho de efeito}. Um estudo pode ter alto poder para detectar uma diferença
+grande e poder muito menor para detectar uma diferença pequena.
+
+\begin{deepdive}
+\boxtitle{Por que usar o cálculo baseado em poder?}
+
+O cálculo baseado em poder é mais adequado quando o objetivo é planejar um
+estudo para detectar uma \textbf{diferença clinicamente relevante}. Nesse caso, especificamos previamente o tamanho do efeito que desejamos detectar, a
+variabilidade esperada, o nível de significância e o poder desejado.
+
+A fórmula baseada na margem de erro, por outro lado, é apropriada quando o
+objetivo principal é obter uma estimativa com determinada \textbf{precisão},
+por exemplo, estimar uma proporção com margem de erro de $5\%$ em um intervalo
+de confiança de $95\%$. Ela não considera diretamente qual diferença entre
+grupos seria clinicamente importante nem a probabilidade de detectar essa
+diferença.
+
+Assim, para um estudo comparativo ou experimental, em que queremos saber
+\emph{quantos participantes são necessários para detectar um efeito relevante}, o cálculo baseado em poder é geralmente a abordagem mais adequada.
+\end{deepdive}
+
+
+\section{Resumo}
+\begin{itemize}
+    \item \textbf{$H_0$ e $H_1$} representam hipóteses mutuamente excludentes
+    sobre a população. A hipótese alternativa pode ser bilateral ou
+    unilateral, e sua direção deve ser definida antes da análise dos dados.
+
+    \item \textbf{O valor-$p$} quantifica a compatibilidade dos dados, ou de
+    resultados ainda mais extremos, com a hipótese nula. Ele não representa a
+    probabilidade de $H_0$ ser verdadeira.
+
+    \item \textbf{Não rejeitar $H_0$ não significa provar sua verdade}.
+    Ausência de evidência estatística suficiente para detectar uma diferença
+    não demonstra que os grupos sejam iguais.
+
+    \item \textbf{Erro Tipo I} ocorre quando rejeitamos uma hipótese nula
+    verdadeira, enquanto o \textbf{Erro Tipo II} ocorre quando não rejeitamos
+    uma hipótese nula falsa.
+
+    \item \textbf{O poder estatístico} é a probabilidade de detectar um efeito
+    de determinado tamanho quando esse efeito realmente existe. Ele depende,
+    entre outros fatores, do tamanho da amostra, do tamanho do efeito e do
+    nível de significância.
+
+    \item \textbf{Significância estatística não é sinônimo de relevância
+    clínica}. A interpretação de um resultado deve considerar a magnitude do
+    efeito, seu intervalo de confiança e o contexto científico e clínico.
+
+    \item \textbf{Associação não implica causalidade}. A interpretação causal
+    depende do desenho do estudo e da possibilidade de controlar fontes de
+    viés e confundimento.
+
+    \item \textbf{A escolha do método estatístico começa pela pergunta
+    científica}, passando pelo desenho do estudo, tipo de variável, estrutura
+    dos grupos e pressupostos do procedimento.
+\end{itemize}
+

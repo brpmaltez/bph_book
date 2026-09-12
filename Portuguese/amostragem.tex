@@ -1,0 +1,449 @@
+\chapter{Amostragem}
+
+\section{Provocação: Por que 762 pacientes e não 100?}
+
+Abra o artigo \textbf{FIRE AND ICE} na seção \textit{"Statistical Analysis"} (dentro de \textit{Methods}) e procure por \textit{"sample size"}:
+
+\begin{quote}
+\small\itshape
+"Assuming event-free 1-year survival rates of 70\% in both groups and with a noninferiority margin of 10\% (corresponding to a hazard ratio of 1.43), we calculated that 249 primary-end-point events would be required for the trial to have 80\% power to test the noninferiority of cryoballoon ablation to radiofrequency ablation, at a one-sided alpha level of 0.025. A sample size of 549 patients was originally estimated. A prespecified blinded sample-size reestimation was performed before enrollment was fully complete. On the basis of the reestimation, we calculated that 768 patients would have to be enrolled to ensure that 249 primary-end-point events would be observed."
+\end{quote}
+
+Os pesquisadores não escolheram o número de participantes simplesmente porque esse número ``parecia suficiente''. Antes do início do estudo, foi necessário estimar quantos pacientes seriam necessários para que o estudo tivesse precisão e poder estatístico adequados.
+
+Essa é uma das primeiras ideias importantes deste capítulo:
+
+\begin{quote}
+\textit{O tamanho de uma amostra não é apenas uma questão de logística. Ele determina quanta informação conseguimos extrair dos dados.}
+\end{quote}
+
+Se estudássemos apenas 10 pacientes, poderíamos obter uma estimativa muito diferente daquela obtida ao estudar 1000 pacientes. Mas por quê?
+
+A resposta começa com um fato aparentemente banal: \textbf{amostras diferentes produzem resultados diferentes}.
+
+\section{Amostras e a variabilidade}
+
+Amostras são subgrupos de uma população escolhidos segundo \textbf{determinados critérios}, que nos permitem chegar a \textbf{certas conclusões} com \textbf{alguma confiança}. Preste atenção na palavra confiança, pois ela é o ponto central de nossa discussão
+Uma \textbf{população} é o conjunto de indivíduos sobre os quais queremos tirar conclusões. Uma \textbf{amostra} é um subconjunto dessa população que efetivamente observamos.
+
+Em pesquisa clínica, quase nunca conseguimos estudar toda a população de interesse. Se quisermos conhecer a pressão arterial média de todos os adultos de uma determinada população, por exemplo, seria impraticável medir cada indivíduo. Em vez disso, selecionamos uma amostra e utilizamos seus resultados para fazer inferências sobre a população.
+
+Mas existe um problema: \textbf{qualquer amostra é apenas uma das muitas amostras possíveis}.
+
+\subsection{Variabilidade amostral}
+
+\begin{definition}[Variabilidade Amostral]
+Variabilidade amostral é a variação natural dos resultados obtidos quando diferentes amostras são selecionadas da mesma população.
+\end{definition}
+
+Exemplos:
+\begin{itemize}
+    \item Se tiramos média de pressão arterial em 10 pacientes: resultado pode ser 134.2 mmHg
+    \item Se repetimos com outros 10 pacientes: resultado pode ser 136.8 mmHg
+    \item A diferença de 2.6 mmHg é devido ao acaso (variabilidade amostral)
+\end{itemize}
+
+\begin{error}
+\boxtitle{Variabilidade amostral não é erro de medição}
+É importante distinguir \textbf{variabilidade amostral} de \textbf{erro de medição}.
+
+A variabilidade amostral ocorre mesmo quando todas as medições são realizadas perfeitamente. Ela existe porque selecionamos apenas uma parte da população.
+
+Já um aparelho mal calibrado, uma balança defeituosa ou uma técnica inadequada de aferição podem introduzir erros de mensuração.
+
+\end{error}
+
+A pergunta passa então a ser:
+
+\begin{quote}
+\textit{Se diferentes amostras produzem diferentes resultados, quão variável é a estimativa que obtivemos?}
+\end{quote}
+
+É aqui que entra a distribuição amostral.
+
+\subsection{Distribuição Amostral}
+\begin{definition}[Distribuição Amostral da Média]
+Distribuição dos valores de uma estatística obtidos em várias amostras da mesma população.
+\end{definition}
+
+Se coletássemos muitas amostras (ex: 1000 amostras de n=30 cada) da mesma população, calcularíamos a média em cada amostra. Essas 1000 médias formariam uma distribuição própria, chamada \textbf{distribuição amostral}.
+
+
+\begin{deepdive}
+\boxtitle{O erro-padrão não é o desvio-padrão}
+
+Essa distinção é fundamental.
+
+O \textbf{desvio-padrão} descreve a variabilidade dos indivíduos dentro de uma população ou amostra.
+
+O \textbf{erro-padrão} descreve a variabilidade de uma estatística, como a média, entre diferentes amostras.
+
+Uma população pode ter indivíduos muito diferentes entre si e, ainda assim, uma média estimada com grande precisão quando o tamanho amostral é suficientemente grande.
+
+\end{deepdive}
+
+\begin{deepdive}
+
+\boxtitle{Teorema Central do Limite (TCL)}
+
+\begin{definition}[Teorema Central do Limite]
+Sob condições apropriadas, à medida que o tamanho da amostra aumenta, a distribuição da média amostral aproxima-se de uma distribuição Normal, independentemente da forma da distribuição original da população.
+\end{definition}
+
+Isso não significa que os indivíduos da população precisam seguir uma distribuição Normal. A população pode apresentar uma distribuição:
+
+\begin{itemize}
+\item aproximadamente Normal;
+\item assimétrica;
+\item uniforme;
+\item exponencial;
+\item ou mesmo com múltiplos picos.
+\end{itemize}
+
+Ainda assim, sob condições adequadas, a distribuição das \textbf{médias amostrais} tende a ser aproximadamente Normal quando $n$ aumenta.
+\end{deepdive}
+
+\begin{error}
+\boxtitle{Não existe um ``n mágico''}
+
+É comum ouvir que ``o TCL funciona quando $n>30$''. Isso é apenas uma regra prática simplificada. Não existe um tamanho amostral universal a partir do qual a aproximação Normal passa a ser válida. A qualidade da aproximação depende também da distribuição original dos dados.
+
+Uma população aproximadamente Normal pode produzir uma distribuição amostral muito próxima da Normal mesmo com amostras pequenas. Já uma população extremamente assimétrica ou com caudas muito pesadas pode exigir amostras consideravelmente maiores.
+
+\end{error}
+
+\section{Erro-padrão}
+
+\begin{definition}[Erro-Padrão]
+Medida da variabilidade esperada de uma estatística entre diferentes amostras.
+\end{definition}
+
+O erro-padrão mede a \textbf{variabilidade esperada} de um estimador amostral.
+
+
+Para a média:
+\begin{equation}
+  \text{SE} = \frac{\sigma}{\sqrt{n}}
+\end{equation}
+
+Onde:
+\begin{itemize}
+    \item $\sigma$ = desvio-padrão populacional
+    \item $n$ = tamanho da amostra
+\end{itemize}
+
+\textbf{Interpretação:} o erro-padrão quantifica a variabilidade
+esperada da média amostral entre amostras repetidas da mesma população.
+
+\textbf{Exemplo FIRE AND ICE:}
+
+\begin{itemize}
+    \item Pressão arterial: $\sigma \approx 18{,}5$ mmHg;
+    \item Amostra: $n=376$ (RF);
+    \item Erro-padrão:
+    \[
+        SE = \frac{18{,}5}{\sqrt{376}}
+        \approx 0{,}95\text{ mmHg}.
+    \]
+\end{itemize}
+
+Isso significa que, se repetíssemos o processo de amostragem muitas vezes, as médias amostrais apresentariam uma variabilidade caracterizada por um erro-padrão de aproximadamente $0{,}95$ mmHg.
+
+\section{Quanto precisamos amostrar?}
+
+Até aqui vimos que aumentar $n$ reduz a incerteza. Mas isso imediatamente produz uma nova pergunta: Quanto é suficiente?
+
+A resposta depende da pergunta que queremos responder. Não existe uma única ``fórmula do tamanho amostral''. O cálculo depende do desenho do estudo e do objetivo da análise. Por exemplo, podemos querer:
+
+\begin{enumerate}
+\item estimar uma média com determinada precisão;
+\item estimar uma proporção com determinada margem de erro;
+\item detectar uma diferença entre dois grupos;
+\item avaliar um desfecho de tempo até evento;
+\item estimar a frequência de um evento raro.
+\end{enumerate}
+
+Cada uma dessas situações possui métodos próprios. Abaixo, iremos comentar algumas fórmulas clássicas para o cálculo do tamanho da amostra.
+
+\subsection{Estimativa de Médias:}
+\begin{equation}
+  n = \frac{\sigma^2 \cdot Z_{\gamma}^2}{\epsilon^2} \quad \text{(Variância Conhecida)} 
+\end{equation}
+
+\begin{equation}
+  n = \frac{s^2 \cdot t_{(n-1,\, \gamma)}^2}{\epsilon^2} \quad \text{(Variância Desconhecida)}
+\end{equation}
+
+\begin{deepdive}
+\boxtitle{A distribuição t-Student e iteratividade}
+O uso do valor $t$ em vez de $Z$ é uma medida de segurança. Como a distribuição $t$-Student tem caudas mais largas, ela assume que há mais incerteza quando trabalhamos com desvios padrão estimados ($s$) em vez de parâmetros reais ($\sigma$). Conforme o $n$ planejado aumenta, o valor de $t$ converge para o de $Z$ e a diferença entre as fórmulas desaparece.
+
+Como $t$ depende dos graus de liberdade, que por sua vez dependem de $n$, o tamanho da amostra não pode ser obtido diretamente por uma única substituição. Na prática, utiliza-se um valor inicial para $n$, calcula-se o valor crítico de $t$, atualiza-se $n$ e repete-se o procedimento até que o resultado se estabilize.
+\end{deepdive}
+
+\subsection{Estimativa de Proporções:}
+\begin{equation}
+  n = \frac{Z_{\gamma}^2 \cdot p(1-p)}{\epsilon^2} \quad \text{(Proporção Estimada)} \qquad
+\end{equation}
+
+\begin{equation}
+\qquad n = \frac{Z_{\gamma}^2}{4\epsilon^2} \quad \text{(Cenário Conservador)}
+\end{equation}
+
+\subsection{Exemplo em R}
+
+Imagine que queremos estimar a proporção de estudantes que praticam atividade física regularmente. Desejamos um intervalo de confiança de 95\% e uma margem de erro de, no máximo, 5 pontos percentuais.
+
+Quando não temos uma estimativa prévia da proporção, utilizamos o cenário conservador, $p=0{,}5$:
+
+\begin{equation}
+    n =
+    \frac{
+        z_{1-\alpha/2}^{\,2}p(1-p)
+    }{
+        \epsilon^2
+    }.
+\end{equation}
+
+Para um intervalo de confiança de 95\%:
+
+\[
+    z_{1-\alpha/2} \approx 1{,}96.
+\]
+
+Como não conhecemos previamente $p$:
+
+\[
+    p(1-p)
+    =
+    0{,}5(1-0{,}5)
+    =
+    0{,}25.
+\]
+
+Assim:
+
+\[
+    n =
+    \frac{
+        1{,}96^2 \times 0{,}25
+    }{
+        0{,}05^2
+    }
+    \approx
+    384{,}16.
+\]
+
+Como não podemos estudar uma fração de participante, arredondamos para cima:
+
+\[
+    \boxed{n=385}.
+\]
+
+Podemos obter o mesmo resultado diretamente no R:
+
+\begin{code}[Código em R: Tamanho da amostra]
+# Parâmetros
+confianca <- 0.95
+margem_erro <- 0.05
+p <- 0.5
+
+# Quantil da distribuição Normal
+z <- qnorm(1 - (1 - confianca) / 2)
+
+# Tamanho da amostra
+n <- z^2 * p * (1 - p) / margem_erro^2
+
+# Arredondar para cima
+n <- ceiling(n)
+
+cat("Tamanho da amostra:", n, "\n")
+\end{code}
+
+O resultado será:
+
+\begin{code}[Resultado]
+Tamanho da amostra: 385
+\end{code}
+
+Esse pequeno exemplo ilustra uma ideia importante do R: as funções estatísticas não substituem o raciocínio estatístico. Primeiro definimos o que queremos estimar, qual precisão desejamos e quais premissas estamos adotando. Só então transformamos esse raciocínio em código.
+
+\begin{deepdive}
+\boxtitle{E se quisermos mais precisão?}
+
+A margem de erro aparece no denominador da fórmula:
+
+\begin{equation}
+    n \propto \frac{1}{\epsilon^2}.
+\end{equation}
+
+Portanto, reduzir a margem de erro exige um aumento considerável no tamanho da amostra.
+
+Por exemplo, se quisermos uma margem de erro de apenas 2 pontos percentuais:
+
+\[
+    n =
+    \frac{
+        1{,}96^2 \times 0{,}25
+    }{
+        0{,}02^2
+    }
+    \approx
+    2401.
+\]
+
+Ou seja, reduzir a margem de erro de 5\% para 2\% exige aumentar a amostra de aproximadamente 385 para 2401 indivíduos.
+\end{deepdive}
+
+\begin{error}
+\boxtitle{Tamanho da amostra não é poder estatístic}
+
+O cálculo acima responde a uma pergunta específica:
+
+\begin{center}
+\textit{Quantos indivíduos precisamos para estimar uma proporção com determinada precisão?}
+\end{center}
+
+Isso é diferente de perguntar se um estudo terá capacidade suficiente para detectar uma diferença entre grupos.
+
+A segunda pergunta envolve o conceito de \textbf{poder estatístico}, que será discutido posteriormente.
+\end{error}
+
+\section{Intervalo de confiança}
+Até agora, pensamos exclusivamente no tamanho da amostra para certo nível de certeza. Mas como isso reverbera nos resultados a serem apresentados? Vimos que as estatísticas amostrais são estimativas pontuais e estão sujeitas ao erro amostral.
+
+A resposta para esse problema é o \textbf{intervalo de confiança}. Em vez de definir um valor específico, elencamos um intervalo no qual temos razoável certeza de que o parâmetro populacional real está. Por exemplo, podemos calcular um intervalo de confiança de 95\% para a média da altura de uma população e obter o intervalo [$1{,}73\text{ m}$ e $1{,}75\text{ m}$]
+
+\begin{definition}[Intervalo de Confiança]
+Um intervalo de confiança é um intervalo calculado a partir dos dados que, sob um procedimento frequentista repetido, contém o parâmetro populacional verdadeiro em uma proporção especificada das repetições.
+\end{definition}
+
+\begin{error}
+\boxtitle{Interpretação Incorreta do Intervalo de Confiança}
+Afirmar que "há 95\% de probabilidade de a verdadeira média da população estar contida no intervalo $[130, 140]$" é incorreto na perspectiva frequentista. A média populacional é um valor fixo, não uma variável aleatória. O correto é afirmar que, se o estudo for repetido 100 vezes com amostras idênticas, 95 desses intervalos conterão a verdadeira média populacional.
+\end{error}
+
+\subsection{Fórmula para médias}
+
+\begin{equation}
+  IC(\mu) = \bar{X} \pm Z_{\gamma} \cdot \frac{\sigma}{\sqrt{n}} \text{(Variância conhecida)}
+\end{equation}
+
+\begin{equation}
+  IC(\mu) = \bar{X} \pm t_{(n-1,\, \gamma)} \cdot \frac{s}{\sqrt{n}} \text{(Variância desconhecida)}
+\end{equation}
+
+\subsection{Fórmula para proporções}
+
+Para uma amostra suficientemente grande, a proporção amostral $\hat{p}$ pode
+ser aproximada por uma distribuição normal:
+
+\begin{equation}
+    \hat{p}
+    \approx
+    N\left(
+        p,\,
+        \frac{p(1-p)}{n}
+    \right).
+\end{equation}
+
+Como o verdadeiro valor de $p$ é desconhecido, utilizamos $\hat{p}$ para
+estimar sua variabilidade. Assim, o intervalo de confiança de Wald é dado por:
+
+\begin{equation}
+    IC
+    =
+    \hat{p}
+    \pm
+    Z_{\gamma}
+    \sqrt{
+        \frac{\hat{p}(1-\hat{p})}{n}
+    }.
+\end{equation}
+
+\begin{deepdive}
+\boxtitle{Por que substituir $p$ por $\hat{p}$?}
+
+Na prática, quase nunca conhecemos o verdadeiro valor de $p$. A proporção
+amostral $\hat{p}$ é nossa estimativa de $p$ e, por isso, é utilizada para
+estimar a incerteza da proporção.
+\end{deepdive}
+
+\subsection{Exemplo em R}
+
+Depois de coletarmos os dados, podemos estimar a proporção observada e quantificar a incerteza dessa estimativa por meio de um intervalo de confiança.
+
+A seguir, calcularemos o intervalo de confiança de 95\% para a taxa de recorrência no grupo de radiofrequência do FIRE AND ICE.
+
+\begin{code}[Código em R: Intervalo de confiança para uma proporção]
+# ============================================================
+# Intervalo de confiança para uma proporção
+# ============================================================
+
+# Dados do grupo RF
+n_rf <- 376
+eventos_rf <- round(n_rf * 0.45)
+
+# ------------------------------------------------------------
+# Intervalo de confiança de 95%
+# ------------------------------------------------------------
+
+ic_rf <- prop.test(
+  x = eventos_rf,
+  n = n_rf,
+  conf.level = 0.95
+)
+
+# Proporção observada
+taxa_rf <- eventos_rf / n_rf
+
+# ------------------------------------------------------------
+# Apresentação do resultado
+# ------------------------------------------------------------
+
+cat("=== Intervalo de Confiança de 95% ===\n\n")
+
+cat("Grupo RF:\n")
+cat("  Eventos: ", eventos_rf, "/", n_rf, "\n", sep = "")
+cat("  Proporção: ", round(taxa_rf * 100, 1), "%\n", sep = "")
+
+cat(
+  "  IC 95%: [",
+  round(ic_rf$conf.int[1] * 100, 1),
+  "%, ",
+  round(ic_rf$conf.int[2] * 100, 1),
+  "%]\n",
+  sep = ""
+)
+\end{code}
+
+O resultado será aproximadamente:
+
+\begin{code}[Resultado]
+=== Intervalo de Confiança de 95% ===
+
+Grupo RF:
+  Eventos: 169/376
+  Proporção: 44.9 %
+  IC 95%: [39.9 %, 50.1 %]
+\end{code}
+
+A estimativa pontual da taxa de recorrência é, portanto, $44{,}9\%$.
+
+O intervalo de confiança de 95\% fornece uma medida da incerteza associada a essa estimativa, resultando no intervalo $[39{,}9\%,\,50{,}1\%]$.
+
+Observe que utilizamos \texttt{prop.test()} em vez de calcular manualmente o intervalo de Wald apresentado anteriormente. Isso ocorre porque, embora a aproximação de Wald seja útil para compreender a construção do intervalo, outros métodos apresentam propriedades melhores em diversas situações. O \texttt{prop.test()} utiliza uma abordagem baseada no teste de qui-quadrado para construir o intervalo.
+
+\section{Resumo}
+
+Neste capítulo, aprendemos que:
+
+\begin{enumerate}
+    \item \textbf{Amostras diferentes produzem resultados diferentes:} essa é a variabilidade amostral.
+    \item \textbf{O erro-padrão mede a incerteza de uma estimativa:} para a média, ele diminui aproximadamente com $1/\sqrt{n}$.
+    \item \textbf{Aumentar o tamanho da amostra aumenta a precisão:} mas o tamanho necessário depende da pergunta de pesquisa.
+    \item \textbf{O intervalo de confiança quantifica a incerteza:} uma estimativa pontual isolada não conta toda a história.
+    \item \textbf{Para proporções,} podemos calcular o tamanho amostral necessário para atingir determinada margem de erro.
+    \item \textbf{No R,} funções como \texttt{qnorm()} e \texttt{prop.test()} permitem transformar esses conceitos em cálculos reproduzíveis.
+    \item \textbf{Intervalos individuais não substituem comparações entre grupos:} para comparar grupos, devemos analisar diretamente a medida de efeito de interesse.
+\end{enumerate}

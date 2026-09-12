@@ -1,0 +1,59 @@
+\chapter*{Introdução}
+
+A estatística é uma das ferramentas mais importantes da ciência, pois nos permite quantificar a incerteza associada aos dados e avaliar a força das evidências diante de determinado achado. Curiosamente, é comum que estudantes de estatística se limitem a memorizar fórmulas, sem de fato compreender por que as utilizam ou como devem aplicá-las na prática.
+
+Diante desse problema, resolvi fazer meu projeto da disciplina de Epidemiologia I (Faculdade de Medicina da Universidade Federal Fluminense, Niterói, RJ) ser um pequeno manual para preencher essa lacuna. O objetivo não é realizar uma revisão completa da matéria, tampouco explicar minuciosamente como o código em R funciona, pois já existem excelentes materiais para ambas as finalidades. Este texto pretende construir uma ponte entre a teoria da bioestatística, sua aplicação prática e sua implementação no R. Por isso, privilegia-se o entendimento intuitivo da estatística em relação ao formalismo matemático.
+
+O objetivo deste pequeno livro é auxiliar futuros pesquisadores que já possuam alguma familiaridade com a bioestatística. Não pretende ser um livro introdutório nem uma obra de referência para estatísticos experientes. A proposta é mais modesta: ajudar o leitor a compreender não apenas \textit{o que} fazer diante de um conjunto de dados, mas principalmente \textit{por que} fazê-lo e \textit{como} interpretar os resultados.
+
+A didática e organização desta obra tem como principais referências \href{https://venhance.github.io/napkin/Napkin.pdf}{An Infinitely Large Napkin}, \href{https://mml-book.github.io/book/mml-book.pdf}{Mathematics for machine learning} e \textit{Astrofísica para apressados}, a qual o título desse manual homenageia. A capa é uma fotografia do autor da Usina Hidrelétrica de Itaipu, que visa representar como o engenho humano é capaz de lidar com grandes quantidades de água (e de dados).
+
+\section*{Elementos Visuais: O Significado das Caixas Coloridas}
+
+Ao longo do manual, você encontrará caixas coloridas que indicam diferentes tipos de conteúdo:
+
+\begin{definition}
+Contém definições formais, termos-chave e conceitos fundamentais. Use estas caixas como referência rápida.
+\end{definition}
+
+\begin{error}
+\boxtitle{Erro}
+Identifica pegadinhas, confusões típicas e interpretações equivocadas frequentes. Aprender o que \textbf{não} fazer é tão importante quanto aprender o que fazer.
+\end{error}
+
+\begin{deepdive}
+\boxtitle{Aprofundamento}
+Contém tópicos mais avançados, deduções matemáticas ou extensões que vão além da ementa básica. Pode ser pulado em uma primeira leitura.
+\end{deepdive}
+
+\begin{code}[Código em R]
+Blocos de código comentado em linguagem R que você pode copiar, colar e executar.
+\end{code}
+
+\section*{O Artigo Utilizado Como Referência}
+
+\begin{definition}[FIRE AND ICE: Ensaio Clínico Randomizado]
+\begin{itemize}
+\item \textbf{Título completo:} Cryoballoon or Radiofrequency Ablation for Paroxysmal Atrial Fibrillation
+
+\item \textbf{Tipo de estudo:} Ensaio clínico randomizado de não inferioridade, com 762 pacientes
+
+\item \textbf{Pergunta de pesquisa:} A crioablação é comparável (não inferior) à radioablação no tratamento da fibrilação atrial refratária a drogas?
+
+\item \textbf{Identificador:} DOI 10.1056/NEJMoa1602014
+
+\item \textbf{Por que foi escolhido:} Demonstra praticamente todos os conceitos abordados neste livro em um desenho real, complexo e moderno, incluindo o conceito de não inferioridade. Exemplifica amostragem, testes de hipótese, interpretação de resultados e comunicação responsável das evidências.
+
+
+\end{itemize}
+\end{definition}
+
+\section*{Quero contribuir ao projeto}
+
+Que bom! Este livro é inteiramente escrito em \LaTeX\ e desenvolvido de forma aberta. Todo o código-fonte, incluindo os capítulos, figuras, referências e demais arquivos necessários para sua compilação, está disponível no \href{https://github.com/brpmaltez/bph_book}{GitHub}.
+
+O livro e seus demais materiais autorais são distribuídos sob a licença \textbf{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)}. Isso significa que você é livre para compartilhar, copiar e adaptar o material para fins não comerciais, desde que atribua os devidos créditos ao autor e distribua eventuais versões modificadas sob a mesma licença.
+
+O código em \LaTeX\ e em R que acompanha o livro, por sua vez, são disponibilizados sob a \textbf{GNU GPLv3}, permitindo seu uso, modificação e redistribuição, inclusive para fins comerciais, desde que os termos da licença sejam respeitados.
+
+Acredito que o conhecimento científico se beneficia quando pode ser compartilhado, reproduzido e aprimorado. Por isso, este projeto é desenvolvido de forma aberta: se você encontrar um erro, tiver uma sugestão ou quiser contribuir com uma melhoria, sinta-se à vontade para fazê-lo por meio do \href{https://github.com/brpmaltez/bph_book}{GitHub}.

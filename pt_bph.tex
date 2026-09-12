@@ -1,0 +1,284 @@
+\documentclass[12pt,a4paper]{book}
+
+% --------------------------------------------------
+% Idioma e tipografia
+% --------------------------------------------------
+\usepackage[brazilian]{babel}
+
+\usepackage{fontspec}
+\usepackage{unicode-math}
+
+\setmainfont{TeX Gyre Termes}
+\setsansfont{TeX Gyre Heros}
+\setmathfont{TeX Gyre Termes Math}
+
+% --------------------------------------------------
+% Geometria da página
+% --------------------------------------------------
+
+\usepackage[
+  top=2.5cm,
+  bottom=2.5cm,
+  left=2.5cm,
+  right=2.5cm
+]{geometry}
+
+\usepackage{pdfpages}
+\usepackage{microtype}
+
+% --------------------------------------------------
+% Espaçamento e listas
+% --------------------------------------------------
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{enumitem}
+\setlist{
+  itemsep=2pt,
+  topsep=4pt,
+  parsep=0pt,
+  partopsep=0pt
+}
+
+% --------------------------------------------------
+% Matemática e símbolos
+% --------------------------------------------------
+
+\usepackage{amsmath}
+\usepackage{xfrac}
+
+% --------------------------------------------------
+% Tabelas
+% --------------------------------------------------
+
+\usepackage{booktabs}
+\usepackage{xltabular}
+\usepackage{caption}
+
+% --------------------------------------------------
+% Gráficos, cores e código
+% --------------------------------------------------
+
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{minted}
+
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{minted}
+
+% --------------------------------------------------
+% Paleta de cores
+% --------------------------------------------------
+
+\definecolor{myRed}{RGB}{178,94,58}
+\definecolor{myBlue}{RGB}{45,95,120}
+\definecolor{myGreen}{RGB}{70,105,75}
+\definecolor{myGrey}{RGB}{55,60,70}
+
+% --------------------------------------------------
+% Configuração geral das caixas
+% --------------------------------------------------
+
+\tcbset{
+    enhanced,
+    breakable,
+    boxrule=0.8pt,
+    before skip=12pt,
+    after skip=14pt,
+    left=10pt,
+    right=10pt,
+    top=7pt,
+    bottom=7pt,
+    fonttitle=\sffamily\bfseries,
+}
+
+% --------------------------------------------------
+% Caixas
+% --------------------------------------------------
+
+\newtcolorbox{definition}[1][Definição]{
+    arc=9pt,
+    outer arc=10pt,
+    colframe=myBlue,
+    colback=myBlue!5,
+    boxrule=1pt,
+    title={#1},
+}
+
+\newtcolorbox{deepdive}[1][]{
+    boxrule=0pt,
+    frame hidden,
+    sharp corners,
+    borderline west={3pt}{0pt}{myGreen},
+    colback=myGreen!5,
+    title={#1},
+    fonttitle=\sffamily\bfseries,
+    attach boxed title to top left={yshift=-2mm, xshift=4mm},
+    boxed title style={
+        frame hidden,
+        colback=myGreen!5,
+    },
+}
+
+\newtcolorbox{error}[1][]{
+    boxrule=0pt,
+    frame hidden,
+    sharp corners,
+    borderline west={3pt}{0pt}{myRed},
+    colback=myRed!5,
+    title={#1},
+    fonttitle=\sffamily\bfseries,
+    attach boxed title to top left={yshift=-2mm, xshift=4mm},
+    boxed title style={
+        frame hidden,
+        colback=myRed!5,
+    },
+}
+
+% --------------------------------------------------
+% Código
+% --------------------------------------------------
+
+\newtcblisting{code}[1][Código]{
+    listing engine=minted,
+    minted language=R,
+    listing only,
+    sharp corners,
+    colback=myGrey!3,
+    colframe=myGrey,
+    boxrule=0.5pt,
+    title={#1},
+    minted options={
+        linenos,
+        numbersep=8pt,
+        breaklines,
+        autogobble,
+        fontsize=\small,
+        tabsize=20
+    }
+}
+
+
+% --------------------------------------------------
+% Títulos
+% --------------------------------------------------
+
+\usepackage{titlesec}
+
+\titleformat{\chapter}[hang]
+  {\normalfont\sffamily\huge\bfseries}
+  {\textcolor{myBlue}{\thechapter}}
+  {0.75em}
+  {}
+
+\titleformat{\section}[hang]
+  {\normalfont\sffamily\Large\bfseries}
+  {\textcolor{myBlue}{\thesection}}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}[hang]
+  {\normalfont\sffamily\large\bfseries}
+  {\textcolor{myBlue}{\thesubsection}}
+  {0.5em}
+  {}
+
+\newcommand{\boxtitle}[1]{%
+  {\sffamily\bfseries #1}\par
+}
+
+% --------------------------------------------------
+% Cabeçalhos e rodapés
+% --------------------------------------------------
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+
+% Even pages
+\fancyhead[LE]{\footnotesize\textit{Bioestatística para apressados}}
+
+% Odd pages
+\fancyhead[RO]{\footnotesize\leftmark}
+
+% Page numbers
+\fancyhead[RE]{\footnotesize\thepage}
+\fancyhead[LO]{\footnotesize\thepage}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\setlength{\headheight}{14.5pt}
+
+% --------------------------------------------------
+% Epígrafe
+% --------------------------------------------------
+
+\usepackage{epigraph}
+
+% --------------------------------------------------
+% Hyperlinks
+% --------------------------------------------------
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=myBlue,
+    citecolor=myGreen!70!black,
+    urlcolor=myRed,
+}
+
+% --------------------------------------------------
+% Document
+% -------------------------------------------------
+\begin{document}
+
+\frontmatter
+
+\includepdf[
+    pages=1,
+    fitpaper=true
+]{img/cover_pt.pdf}
+
+% --------------------------------------------------
+% Epígrafe
+% --------------------------------------------------
+
+\thispagestyle{empty}
+
+\vspace*{\fill}
+
+\epigraph{
+    ``It doesn't matter how beautiful your theory is, it doesn't matter how smart you are. If it doesn't agree with experiment, it's wrong.''
+}{
+    Richard P. Feynman
+}
+
+\vspace*{\fill}
+
+% --------------------------------------------------
+% Agradecimentos
+% --------------------------------------------------
+
+\input{Portuguese/agradecimentos.tex}
+
+% --------------------------------------------------
+% Sumário
+% --------------------------------------------------
+
+\tableofcontents
+
+% --------------------------------------------------
+% Corpo do livro
+% --------------------------------------------------
+
+\mainmatter
+
+\input{Portuguese/introducao.tex}
+\input{Portuguese/amostragem.tex}
+\input{Portuguese/hipotese.tex}
+\input{Portuguese/quando.tex}
+
+\end{document}
